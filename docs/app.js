@@ -4,31 +4,42 @@ const yamlSource = 'https://raw.githubusercontent.com/rebangkkuser/ModuleForge/r
 async function loadModules() {
     try {
         const response = await fetch(yamlSource);
+        if (!response.ok) throw new Error('Network response was not ok');
+        
         const yamlText = await response.text();
         const modules = jsyaml.load(yamlText);
 
-        renderModules(modules);
+        if (modules && modules.length > 0) {
+            renderModules(modules);
+        } else {
+            container.innerHTML = '<p>No modules found.</p>';
+        }
     } catch (error) {
-        console.error('Error fetching modules:', error);
+        container.innerHTML = `<p>Error: ${error.message}</p>`;
+        console.error(error);
     }
 }
 
 function renderModules(modules) {
-    if (!modules || !Array.isArray(modules)) return;
+    container.innerHTML = modules.map(mod => {
+        const icon = mod.icon || 'https://cdn-icons-png.flaticon.com/512/2586/2586488.png';
+        const mirror2Html = (mod.downloadLinkMirror2 && mod.downloadLinkMirror2 !== 'N/A') 
+            ? `<a class="btn secondary" href="${mod.downloadLinkMirror2}" target="_blank">GitHub Mirror</a>` 
+            : '';
 
-    container.innerHTML = modules.map(mod => `
-        <div class="module-card">
-            <div class="card-header">
-                <img src="${mod.icon}" alt="${mod.name}" onerror="this.src='https://placehold.co/80?text=No+Icon'">
-                <h3>${mod.name}</h3>
+        return `
+            <div class="module-card">
+                <div class="card-header">
+                    <img src="${icon}" alt="${mod.name}">
+                    <h3>${mod.name}</h3>
+                </div>
+                <div class="links">
+                    <a class="btn primary" href="${mod.downloadLinkMirror1}" target="_blank">Download</a>
+                    ${mirror2Html}
+                </div>
             </div>
-            <div class="links">
-                <a class="btn primary" href="${mod.downloadLinkMirror1}" target="_blank">Official Mirror</a>
-                <a class="btn secondary" href="${mod.downloadLinkMirror2}" target="_blank">GitHub Mirror</a>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 loadModules();
-
