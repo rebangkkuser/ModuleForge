@@ -39,6 +39,9 @@ echo "python: $PYTHON"
 echo "downloading server..."
 
 curl -L -o local.py https://raw.githubusercontent.com/rebangkkuser/ModuleForge/main/py/local.py || exit 1
+mkdir data
+mkdir mirror
+touch data/data.yaml
 
 echo "starting server..."
 echo 3
