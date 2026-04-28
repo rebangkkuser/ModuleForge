@@ -6,16 +6,14 @@ const yamlSource = 'https://raw.githubusercontent.com/rebangkkuser/ModuleForge/r
 
 async function loadModules() {
     try {
-        const response = await fetch(yamlSource, {
-            cache: 'no-cache'
-        });
+        const response = await fetch(yamlSource, { cache: 'no-cache' });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
 
         const yamlText = await response.text();
-        const modules = jsyaml.safeLoad(yamlText);
+        
+        // Usando load com SafeLoader (mais compatível na v4)
+        const modules = jsyaml.load(yamlText, { schema: jsyaml.FAILSAFE_SCHEMA });
 
         if (!modules || !Array.isArray(modules) || modules.length === 0) {
             container.innerHTML = '<p>No modules found.</p>';
@@ -32,7 +30,6 @@ async function loadModules() {
 
 function renderModules(modules) {
     let html = '';
-
     for (let mod of modules) {
         const icon = mod.icon || 'https://cdn-icons-png.flaticon.com/512/2586/2586488.png';
         
@@ -53,7 +50,6 @@ function renderModules(modules) {
             </div>
         `;
     }
-
     container.innerHTML = html;
 }
 
