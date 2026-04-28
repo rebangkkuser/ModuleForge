@@ -7,50 +7,51 @@ const yamlSource = 'https://raw.githubusercontent.com/rebangkkuser/ModuleForge/r
 async function loadModules() {
     try {
         const response = await fetch(yamlSource, { cache: 'no-cache' });
-
-        if (!response.ok) throw new Error('Network response was not ok');
+        
+        if (!response.ok) {
+            throw new Error('Falha ao baixar o YAML');
+        }
 
         const yamlText = await response.text();
-        
-        // Usando load com SafeLoader (mais compatível na v4)
-        const modules = jsyaml.load(yamlText, { schema: jsyaml.FAILSAFE_SCHEMA });
+        const modules = jsyaml.load(yamlText);
 
-        if (!modules || !Array.isArray(modules) || modules.length === 0) {
-            container.innerHTML = '<p>No modules found.</p>';
+        if (!modules || !Array.isArray(modules)) {
+            container.innerHTML = '<p>Erro: O YAML não é uma lista de módulos.</p>';
             return;
         }
 
-        renderModules(modules);
+        if (modules.length === 0) {
+            container.innerHTML = '<p>Nenhum módulo encontrado.</p>';
+            return;
+        }
+
+        let html = '';
+        for (let mod of modules) {
+            const icon = mod.icon || 'https://cdn-icons-png.flaticon.com/512/2586/2586488.png';
+            const mirror2 = (mod.downloadLinkMirror2 && mod.downloadLinkMirror2 !== 'N/A') 
+                ? `<a class="btn secondary" href="${mod.downloadLinkMirror2}" target="_blank">Mirror</a>` 
+                : '';
+
+            html += `
+                <div class="module-card">
+                    <div class="card-header">
+                        <img src="\( {icon}" alt=" \){mod.name || 'Module'}">
+                        <h3>${mod.name || 'Sem nome'}</h3>
+                    </div>
+                    <div class="links">
+                        <a class="btn primary" href="${mod.downloadLinkMirror1}" target="_blank">Download</a>
+                        ${mirror2}
+                    </div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
 
     } catch (error) {
-        container.innerHTML = `<p>Error: ${error.message}</p>`;
+        container.innerHTML = `<p style="color:red;">Erro: ${error.message}</p>`;
         console.error(error);
     }
-}
-
-function renderModules(modules) {
-    let html = '';
-    for (let mod of modules) {
-        const icon = mod.icon || 'https://cdn-icons-png.flaticon.com/512/2586/2586488.png';
-        
-        const mirror2Html = (mod.downloadLinkMirror2 && mod.downloadLinkMirror2 !== 'N/A') 
-            ? `<a class="btn secondary" href="${mod.downloadLinkMirror2}" target="_blank">GitHub Mirror</a>` 
-            : '';
-
-        html += `
-            <div class="module-card">
-                <div class="card-header">
-                    <img src="\( {icon}" alt=" \){mod.name}">
-                    <h3>${mod.name}</h3>
-                </div>
-                <div class="links">
-                    <a class="btn primary" href="${mod.downloadLinkMirror1}" target="_blank">Download</a>
-                    ${mirror2Html}
-                </div>
-            </div>
-        `;
-    }
-    container.innerHTML = html;
 }
 
 loadModules();
