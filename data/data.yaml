@@ -8,3 +8,8 @@
   downloadLinkMirror2: https://github.com/rebangkkuser/ModuleForge/raw/refs/heads/main/mirror/FrirenAI/AxManager-Frieren_AI_5.0.zip
   icon: 
   
+- name: Vector
+  downloadLinkMirror1: https://github.com/JingMatrix/Vector/releases/download/v2.0/Vector-v2.0-3021-Release.zip
+  downloadLinkMirror2: https://github.com/rebangkkuser/ModuleForge/raw/refs/heads/main/mirror/Vector/Vector-v2.0-3021-Release.zip
+  icon: https://raw.githubusercontent.com/rebangkkuser/ModuleForge/refs/heads/main/assets/modulesImages/lsposed.webp
+  
