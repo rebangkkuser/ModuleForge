@@ -6,7 +6,7 @@ ModuleForge is a Magisk module catalog website maintained by [bangkkuser](https:
 
 The full module list can be found in:
 
-/data/data.yaml
+[/data/data.yaml](https://github.com/rebangkkuser/ModuleForge/blob/main/data/data.yaml)
 
 This file contains all supported modules and metadata.
 
