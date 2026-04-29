@@ -1,0 +1,3 @@
+We're sorry, we couldn't find the requested file in our mirror. This usually happens because:
+- The module is closed source.
+- The module has not yet been published on Mirror. 
