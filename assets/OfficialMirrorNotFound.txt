@@ -2,6 +2,7 @@ The official mirror for this module could not be found; here are some possible r
 - The module has been discontinued and the official download repository or Mirror has been deleted.
 - The Releases asset has been deleted (if it's still in the repository, please open an issue in our repository).
 - The repository has been moved and the Releases have been deleted.
+- The official link could not be found. 
 If you encounter any errors, please contact us via Issues.
 
 Sorry if that bothered you.
