@@ -2,7 +2,7 @@
 
 <script>
 const container = document.getElementById('module-container');
-const yamlSource = 'https://raw.githubusercontent.com/rebangkkuser/ModuleForge/refs/heads/main/data/data.yaml';
+const yamlSource = 'data/data.yaml';
 
 async function loadModules() {
     try {
