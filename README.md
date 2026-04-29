@@ -1,5 +1,7 @@
 # ModuleForge
 
+![Banner](assets/moduleForge-README.md-banner.png)
+
 ModuleForge is a Magisk module catalog website maintained by [bangkkuser](https://github.com/rebangkkuser).
 
 ## Modules
