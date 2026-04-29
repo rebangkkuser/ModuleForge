@@ -6,5 +6,5 @@ PORT = 8000
 Handler = http.server.SimpleHTTPRequestHandler
 
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
-print(f"Serving ModuleForge in port {PORT} (localhost:{PORT})")
-httpd.serve_forever()
+    print(f"Serving ModuleForge in port {PORT} (localhost:{PORT})")
+    httpd.serve_forever()
